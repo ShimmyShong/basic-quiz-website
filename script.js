@@ -1,14 +1,4 @@
-// var answerPool = [
-//     'Something is ammuck',
-//     'i cannot beleive this is happn',
-//     'test2'
-// ]
-// var questionPool = [
-//     'question1',
-//     'question2',
-//     'question3',
-//     'question4'
-// ]
+
 
 var objectQuestionAnswer = [
     {
@@ -38,25 +28,40 @@ var objectQuestionAnswer = [
     },
 ]
 
+var randomlyGenerated = [];
+
 var cards = document.querySelectorAll(".card");
 var container = document.querySelector("#container");
 var questionEl = document.querySelector('#questionText');
 var randomIndex = 0;
 
-function chooseRandom(){
-    // randomIndex = Math.floor(Math.random(answerPool.length) * 3);
-    randomIndex = Math.floor(Math.random(4) * 3);
+function chooseRandomAnswer(){
+    randomIndex = Math.floor(Math.random(objectQuestionAnswer[0].answerPool.length) * 4);
+    while(randomlyGenerated.length < 4){
+        if(randomlyGenerated.includes(randomIndex)){
+            break;
+        }
+        else{
+            randomlyGenerated = randomlyGenerated.concat(randomIndex);
+        }
+    }
+    console.log(randomlyGenerated);
+    return randomIndex;
+}
+
+function chooseRandomQuestion(){
+    randomIndex = Math.floor(Math.random(objectQuestionAnswer.length) * 4);
     return randomIndex;
 }
 
 function generateQuestions(){
-    questionEl.textContent = objectQuestionAnswer[chooseRandom()].question;
+    questionEl.textContent = objectQuestionAnswer[chooseRandomQuestion()].question;
 }
 
 function generateAnswers(){
     cards.forEach((card) => {
         for(i = 0; i < cards.length; i++){
-            card.textContent = objectQuestionAnswer[chooseRandom()].answerPool[chooseRandom()]
+            card.textContent = objectQuestionAnswer[chooseRandomAnswer()].answerPool[chooseRandomAnswer()];
         }
     })
     answerClick();
@@ -65,8 +70,9 @@ function generateAnswers(){
 
 function answerClick(){
     cards.forEach((card) => {
-        card.addEventListener("click", function() {
-            card.textContent = objectQuestionAnswer.answerPool[chooseRandom()]
+        card.addEventListener("click", function(){
+            generateAnswers();
+            generateQuestions();
         })
     })
 }
@@ -80,5 +86,3 @@ generateQuestions();
 //     generateAnswers();
 //     generateQuestions();
 // })
-
-console.log(objectQuestionAnswer[0].answerPool[2]);
