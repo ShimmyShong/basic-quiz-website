@@ -1,0 +1,30 @@
+* {
+    margin:0;
+    padding:0;
+}
+
+.header{
+    margin: 2%;
+    font-size: 40px;
+    text-align: center;
+}
+
+.center{
+    font-size: 26px;
+    text-align: center;
+}
+
+.buttons{
+    margin: 3%;
+}
+
+.question{
+    margin-top: 3%;
+}
+
+.card{
+    background-color: antiquewhite;
+    padding: 3%;
+    border-style: solid;
+    border-color: black;
+}
