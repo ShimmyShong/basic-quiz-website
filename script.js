@@ -33,17 +33,21 @@ var container = document.querySelector("#container");
 var questionEl = document.querySelector('#questionText');
 var randomIndex = 0;
 
+var timerInverval;
+var time = 0;
+var timeCap = 10;
+var correctAnswers = 0;
+
 function chooseRandomIndex(){
-    randomIndex = Math.floor(Math.random(objectQuestionAnswer[0].answerPool.length) * 4);
-    return randomIndex;
+    randomIndex = Math.floor(Math.random() * objectQuestionAnswer[0].answerPool.length);
 }
 
-// TODO sometimes only 3 elements are given in the array, fix this later
 function chooseRandomAnswer(){
+    randomlyGenerated = []; // important to empty the array at the beginning so that it is different each time this function is called
     while(randomlyGenerated.length < 4){
         chooseRandomIndex();
         if(randomlyGenerated.includes(randomIndex)){
-            break;
+            continue;
         }
         else{
             randomlyGenerated.push(randomIndex);
@@ -64,11 +68,13 @@ function generateQuestions(){
 
 // TODO when i click on the questions, new answers dont appear, fix this later
 function generateAnswers(){
-    randomlyGenerated = chooseRandomAnswer();
+    var currentQuestionIndex = chooseRandomQuestion();
+    var answerPool = objectQuestionAnswer[currentQuestionIndex].answerPool;
     for (var i = 0; i < cards.length; i++){
+        chooseRandomAnswer();
         for (var n = 0; n < randomlyGenerated.length; n++){ 
-            chooseRandomAnswer();
-            cards[n].textContent = objectQuestionAnswer[chooseRandomIndex()].answerPool[randomlyGenerated[n]];
+            cards[n].textContent = objectQuestionAnswer[i].answerPool[randomlyGenerated[n]]; // randomlyGenerated[n]
+            console.log(i);
         }
     }
     answerClick();
@@ -86,4 +92,3 @@ function answerClick(){
 
 generateAnswers();
 generateQuestions();
-
