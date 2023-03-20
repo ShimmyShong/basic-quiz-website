@@ -64,10 +64,12 @@ var buttonEl = document.querySelector('#button');
 var firstScreenEl = document.querySelector('#first-screen');
 var currentQuestionIndex = 0;
 var randomIndex = 0;
+userScore = 0;
 
 container.setAttribute("style", "display: none"); // TODO might want to set these ids to be display: none in the CSS
 var timerInverval;
 var time = 0;
+var timeUsed = 0;
 var timeCap = 10;
 var correctAnswers = 0;
 
@@ -120,6 +122,9 @@ function endGame(){
     console.log("used up all questions");
     timeEl.setAttribute("style", "display: none");
     container.setAttribute("style", "display: none"); 
+    saveScore();
+    console.log(userScore);
+    location.href = "highscores.html";
 }
 
 function answerClick(){
@@ -132,6 +137,7 @@ function answerClick(){
                 console.log("correct!");
                 accurateEl.setAttribute('style', 'color: green');
                 accurateEl.textContent = "Correct!";
+                correctAnswers++;
             }
             else{
                 console.log("incorrect");
@@ -153,6 +159,7 @@ function setTime(){
         var timerInterval = setInterval(function(){
             timeEl.textContent = "Time left: " + time;
             time--;
+            timeUsed++;
             if (time < 0){
                 endGame();
                 clearInterval(timerInterval);
@@ -177,4 +184,24 @@ function initQuiz(){
     container.setAttribute('style', 'display: block');
     generateQuestionsAndAnswers();
     answerClick();
+}
+
+function calculateScore(){
+    userScore = (correctAnswers * 100) - (timeUsed * 10);
+    return userScore;
+}
+
+function saveScore(){
+    calculateScore();
+
+    var newEntry = {
+        // name: nameInput,
+        score: userScore
+    };
+
+    var localStorageHighScores = JSON.parse(localStorage.getItem("score")) || [];
+
+    localStorageHighScores.push(newEntry);
+
+    localStorage.setItem("score", JSON.stringify(localStorageHighScores));
 }
