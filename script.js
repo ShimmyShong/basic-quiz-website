@@ -62,33 +62,28 @@ function chooseRandomQuestion(){
     return randomIndex;
 }
 
-function generateQuestions(){
-    questionEl.textContent = objectQuestionAnswer[chooseRandomQuestion()].question;
-}
 
-// TODO when i click on the questions, new answers dont appear, fix this later
-function generateAnswers(){
+function generateQuestionsAndAnswers(){
     var currentQuestionIndex = chooseRandomQuestion();
     var answerPool = objectQuestionAnswer[currentQuestionIndex].answerPool;
     for (var i = 0; i < cards.length; i++){
         chooseRandomAnswer();
         for (var n = 0; n < randomlyGenerated.length; n++){ 
-            cards[n].textContent = objectQuestionAnswer[i].answerPool[randomlyGenerated[n]]; // randomlyGenerated[n]
+            cards[n].textContent = answerPool[randomlyGenerated[n]]; // randomlyGenerated[n]
+            questionEl.textContent = objectQuestionAnswer[currentQuestionIndex].question;
             console.log(i);
         }
     }
-    answerClick();
 }
 
 
 function answerClick(){
-    cards.forEach((card) => {
-        card.addEventListener("click", function(){
-            generateAnswers();
-            generateQuestions();
+    for(var i = 0; i < cards.length; i++){
+        cards[i].addEventListener("click", function(){
+            generateQuestionsAndAnswers();
         })
-    })
+    }
 }
 
-generateAnswers();
-generateQuestions();
+generateQuestionsAndAnswers();
+answerClick();
