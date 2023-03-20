@@ -61,17 +61,22 @@ var accurateEl = document.querySelector('#accurate');
 var timeEl = document.querySelector('#timer');
 var timerInput = document.querySelector('#timer-input');
 var buttonEl = document.querySelector('#button');
+var button2El = document.querySelector('#button2');
 var firstScreenEl = document.querySelector('#first-screen');
+var secondScreenEl = document.querySelector('#second-screen');
+var nameInputEl = document.querySelector('#name-input');
 var currentQuestionIndex = 0;
 var randomIndex = 0;
-userScore = 0;
+var userScore = 0;
 
+secondScreenEl.setAttribute('style', 'display: none');
 container.setAttribute("style", "display: none"); // TODO might want to set these ids to be display: none in the CSS
 var timerInverval;
 var time = 0;
 var timeUsed = 0;
 var timeCap = 10;
 var correctAnswers = 0;
+var nameInput = '';
 
 function chooseRandomIndex(){
     randomIndex = Math.floor(Math.random() * objectQuestionAnswer[0].answerPool.length);
@@ -121,10 +126,13 @@ function generateQuestionsAndAnswers(){
 function endGame(){
     console.log("used up all questions");
     timeEl.setAttribute("style", "display: none");
-    container.setAttribute("style", "display: none"); 
-    saveScore();
+    container.setAttribute("style", "display: none");
+    button2El.addEventListener('click', function() {
+        getName();
+        saveScore();
+    });
     console.log(userScore);
-    location.href = "highscores.html";
+    secondScreenEl.setAttribute('style', 'display: block');
 }
 
 function answerClick(){
@@ -191,17 +199,36 @@ function calculateScore(){
     return userScore;
 }
 
+function getName(){
+    nameInput = nameInputEl.value.trim();
+    console.log(nameInputEl.value);
+    console.log(nameInput);
+    return nameInput;
+}
+
+    
+
+
 function saveScore(){
     calculateScore();
-
-    var newEntry = {
-        // name: nameInput,
+    getName();
+    newScore = {
         score: userScore
     };
+    newName = {
+        name: nameInput
+    };
+    console.log(newName.name);
+    var localStorageHighScores = JSON.parse(localStorage.getItem("localStorageHighScores")) || [];
+    var localStorageNames = JSON.parse(localStorage.getItem("localStorageNames")) || [];
 
-    var localStorageHighScores = JSON.parse(localStorage.getItem("score")) || [];
+    console.log(localStorageHighScores);
+    console.log(localStorageNames);
 
-    localStorageHighScores.push(newEntry);
+    localStorageHighScores.push(newScore);
+    localStorageNames.push(newName);
 
-    localStorage.setItem("score", JSON.stringify(localStorageHighScores));
+    localStorage.setItem("localStorageHighScores", JSON.stringify(localStorageHighScores));
+    localStorage.setItem("localStorageNames", JSON.stringify(localStorageNames));
 }
+
