@@ -20,8 +20,18 @@ var objectQuestionAnswer = [
         correctAnswerIndex: 3
     },
     {
-        question: 'question5',
+        question: 'question6',
         answerPool: ['answer1', 'answer2', 'answer3', 'answer4'],
+        correctAnswerIndex: 3
+    },
+    {
+        question: 'question7',
+        answerPool: ['answasdasder1', 'ans123123213wer2', 'aasdnswer3', 'ansdsw3qqweqw123413wer4'],
+        correctAnswerIndex: 3
+    },
+    {
+        question: 'question8',
+        answerPool: ['answasdaser1', 'ansasdwer2', 'answedsar3', 'anssdsawer4'],
         correctAnswerIndex: 3
     },
 ]
@@ -58,7 +68,7 @@ function chooseRandomAnswer(){
 }
 
 function chooseRandomQuestion(){
-    randomIndex = Math.floor(Math.random(objectQuestionAnswer.length) * 4);
+    randomIndex = Math.floor(Math.random() * objectQuestionAnswer.length);
     return randomIndex;
 }
 
