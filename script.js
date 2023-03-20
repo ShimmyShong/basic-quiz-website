@@ -20,32 +20,32 @@ var objectQuestionAnswer = [
         correctAnswerIndex: 0
     },
     {
-        question: 'question6',
+        question: 'question5',
         answerPool: ['answer1', 'answer2', 'answer3', 'correct'],
         correctAnswerIndex: 3
     },
     {
-        question: 'question7',
+        question: 'question6',
         answerPool: ['answasdasder1', 'ans123123213wer2', 'correct', 'ansdsw3qqweqw123413wer4'],
         correctAnswerIndex: 2
     },
     {
-        question: 'question8',
+        question: 'question7',
         answerPool: ['answasdaser1', 'ansas4788dwer2', 'answedsar3', 'correct'],
         correctAnswerIndex: 3
     },
     {
-        question: 'question9',
+        question: 'question8',
         answerPool: ['correct', 'ansp[]p[]asdwer2', 'answedsar3', 'anssdsawer4'],
         correctAnswerIndex: 0
     },
     {
-        question: 'question10',
+        question: 'question9',
         answerPool: ['answasdaser1', 'ansaqwesdwer2', 'an231fvswedsar3', 'anssdqsawer4'],
         correctAnswerIndex: 3
     },
     {
-        question: 'question11',
+        question: 'question10',
         answerPool: ['ansasdaswasdaser1', 'correct', 'answedsaqwer3', 'ans3sdsawer4'],
         correctAnswerIndex: 1
     },
@@ -57,6 +57,7 @@ var usedQuestionsArray = [];
 var cards = document.querySelectorAll(".card");
 var container = document.querySelector("#container");
 var questionEl = document.querySelector('#questionText');
+var currentQuestionIndex = 0;
 var randomIndex = 0;
 
 var timerInverval;
@@ -82,19 +83,20 @@ function chooseRandomAnswer(){
             randomlyGeneratedArray.push(randomIndex);
         }
     }
-    console.log(randomlyGeneratedArray);
+    // console.log(randomlyGeneratedArray);
     return randomlyGeneratedArray;
 }
 
 function chooseRandomQuestion(){
-    randomIndex = Math.floor(Math.random() * objectQuestionAnswer.length);
-    return randomIndex;
+    currentQuestionIndex = Math.floor(Math.random() * objectQuestionAnswer.length);
+    return currentQuestionIndex;
 }
 
-
-
+// TODO the currentQuestionIndex changes for no reason??????
 function generateQuestionsAndAnswers(){
-    var currentQuestionIndex = chooseRandomQuestion(); // this represents the question number
+    // currentQuestionIndex = chooseRandomQuestion(); // this represents the question number
+    chooseRandomQuestion();
+    console.log("current question index: " + currentQuestionIndex);
     var answerPool = objectQuestionAnswer[currentQuestionIndex].answerPool;
     if (usedQuestionsArray.length == objectQuestionAnswer.length){ // conditions for when to end the game // TODO make sure to add timer counting!!!
         endGame();
@@ -112,6 +114,7 @@ function generateQuestionsAndAnswers(){
         }
         usedQuestionsArray.push(currentQuestionIndex); // adds current current question index to an array
     }
+    return currentQuestionIndex;
 }
 
 function endGame(){
@@ -120,16 +123,17 @@ function endGame(){
 
 function answerClick(){
     cards.forEach(card =>{
-        var currentQuestionIndex = chooseRandomQuestion(); // this represents the question number
         card.addEventListener("click", () =>{
+            generateQuestionsAndAnswers();
             clickedAnswerIndex = Array.from(cards).indexOf(card); // when using querySelectorAll, this is how you would identify which of the elements were being clicked on
-            console.log(clickedAnswerIndex);
-            console.log(cards[clickedAnswerIndex]);
-            console.log(objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex);
+            console.log("current question index: " + currentQuestionIndex);
+            // console.log("clicked answer index: " + clickedAnswerIndex);
+            // console.log(cards[clickedAnswerIndex]);
+            // console.log("correct answer Index of current question: " + objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex);
             if (clickedAnswerIndex == objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex){
                 console.log("correct!");
             }
-            generateQuestionsAndAnswers();
+            
         });
     });
 }
