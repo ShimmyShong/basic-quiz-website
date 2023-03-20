@@ -1,38 +1,53 @@
 var objectQuestionAnswer = [
     {
         question: 'Which planet is closest to the sun?',
-        answerPool: ['Venus', 'Mercury', 'Mars', 'Jupiter'],
-        correctAnswerIndex: 2
-    },
-    {
-        question: 'What is the smallest country in the world by land area?',
-        answerPool: ['Monaco', 'Vatican City', 'San Marino', 'Liechtenstein'],
-        correctAnswerIndex: 0
-    },
-    {
-        question: 'Who is the founder of Microsoft?',
-        answerPool: ['Bill Gates', 'Steve Jobs', 'Mark Zuckerberg', 'Jeff Bezos'],
+        answerPool: ['Venus', 'correct', 'Mars', 'Jupiter'],
         correctAnswerIndex: 1
     },
     {
-        question: 'What is the capital city of Canada?',
-        answerPool: ['Toronto', 'Vancouver', 'Ottawa', 'Montreal'],
+        question: 'What is the smallest country in the world by land area?',
+        answerPool: ['Monaco', 'correct', 'San Marino', 'Liechtenstein'],
+        correctAnswerIndex: 1
+    },
+    {
+        question: 'Who is the founder of Microsoft?',
+        answerPool: ['Bill Gates', 'Steve Jobs', 'Mark Zuckerberg', 'correct'],
         correctAnswerIndex: 3
     },
     {
+        question: 'What is the capital city of Canada?',
+        answerPool: ['correct', 'Vancouver', 'Ottawa', 'Montreal'],
+        correctAnswerIndex: 0
+    },
+    {
         question: 'question6',
-        answerPool: ['answer1', 'answer2', 'answer3', 'answer4'],
+        answerPool: ['answer1', 'answer2', 'answer3', 'correct'],
         correctAnswerIndex: 3
     },
     {
         question: 'question7',
-        answerPool: ['answasdasder1', 'ans123123213wer2', 'aasdnswer3', 'ansdsw3qqweqw123413wer4'],
-        correctAnswerIndex: 3
+        answerPool: ['answasdasder1', 'ans123123213wer2', 'correct', 'ansdsw3qqweqw123413wer4'],
+        correctAnswerIndex: 2
     },
     {
         question: 'question8',
-        answerPool: ['answasdaser1', 'ansasdwer2', 'answedsar3', 'anssdsawer4'],
+        answerPool: ['answasdaser1', 'ansas4788dwer2', 'answedsar3', 'correct'],
         correctAnswerIndex: 3
+    },
+    {
+        question: 'question9',
+        answerPool: ['correct', 'ansp[]p[]asdwer2', 'answedsar3', 'anssdsawer4'],
+        correctAnswerIndex: 0
+    },
+    {
+        question: 'question10',
+        answerPool: ['answasdaser1', 'ansaqwesdwer2', 'an231fvswedsar3', 'anssdqsawer4'],
+        correctAnswerIndex: 3
+    },
+    {
+        question: 'question11',
+        answerPool: ['ansasdaswasdaser1', 'correct', 'answedsaqwer3', 'ans3sdsawer4'],
+        correctAnswerIndex: 1
     },
 ]
 
@@ -48,6 +63,9 @@ var timerInverval;
 var time = 0;
 var timeCap = 10;
 var correctAnswers = 0;
+
+// container.setAttribute("style", "display: none"); THIS will hide the questions and answers
+// container.setAttribute("style", "display: block"); THIS will bring the questions and answers back
 
 function chooseRandomIndex(){
     randomIndex = Math.floor(Math.random() * objectQuestionAnswer[0].answerPool.length);
@@ -74,10 +92,11 @@ function chooseRandomQuestion(){
 }
 
 
+
 function generateQuestionsAndAnswers(){
     var currentQuestionIndex = chooseRandomQuestion(); // this represents the question number
     var answerPool = objectQuestionAnswer[currentQuestionIndex].answerPool;
-    if (usedQuestionsArray.length == objectQuestionAnswer.length){ // ends game when all questions are answered
+    if (usedQuestionsArray.length == objectQuestionAnswer.length){ // conditions for when to end the game // TODO make sure to add timer counting!!!
         endGame();
     }
     else if (usedQuestionsArray.includes(currentQuestionIndex)){ // recalls function if question was already answered
@@ -91,11 +110,8 @@ function generateQuestionsAndAnswers(){
                 questionEl.textContent = objectQuestionAnswer[currentQuestionIndex].question;
             }
         }
-        usedQuestionsArray.push(currentQuestionIndex);
+        usedQuestionsArray.push(currentQuestionIndex); // adds current current question index to an array
     }
-
-    console.log(currentQuestionIndex);
-    console.log(usedQuestionsArray);
 }
 
 function endGame(){
@@ -103,11 +119,19 @@ function endGame(){
 }
 
 function answerClick(){
-    for(var i = 0; i < cards.length; i++){
-        cards[i].addEventListener("click", function(){
+    cards.forEach(card =>{
+        var currentQuestionIndex = chooseRandomQuestion(); // this represents the question number
+        card.addEventListener("click", () =>{
+            clickedAnswerIndex = Array.from(cards).indexOf(card); // when using querySelectorAll, this is how you would identify which of the elements were being clicked on
+            console.log(clickedAnswerIndex);
+            console.log(cards[clickedAnswerIndex]);
+            console.log(objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex);
+            if (clickedAnswerIndex == objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex){
+                console.log("correct!");
+            }
             generateQuestionsAndAnswers();
-        })
-    }
+        });
+    });
 }
 
 generateQuestionsAndAnswers();
