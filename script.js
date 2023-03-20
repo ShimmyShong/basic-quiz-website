@@ -36,7 +36,8 @@ var objectQuestionAnswer = [
     },
 ]
 
-var randomlyGenerated = [];
+var randomlyGeneratedArray = [];
+var usedQuestionsArray = [];
 
 var cards = document.querySelectorAll(".card");
 var container = document.querySelector("#container");
@@ -53,18 +54,18 @@ function chooseRandomIndex(){
 }
 
 function chooseRandomAnswer(){
-    randomlyGenerated = []; // important to empty the array at the beginning so that it is different each time this function is called
-    while(randomlyGenerated.length < 4){
+    randomlyGeneratedArray = []; // important to empty the array at the beginning so that it is different each time this function is called
+    while(randomlyGeneratedArray.length < 4){
         chooseRandomIndex();
-        if(randomlyGenerated.includes(randomIndex)){
+        if(randomlyGeneratedArray.includes(randomIndex)){
             continue;
         }
         else{
-            randomlyGenerated.push(randomIndex);
+            randomlyGeneratedArray.push(randomIndex);
         }
     }
-    console.log(randomlyGenerated);
-    return randomlyGenerated;
+    console.log(randomlyGeneratedArray);
+    return randomlyGeneratedArray;
 }
 
 function chooseRandomQuestion(){
@@ -74,18 +75,32 @@ function chooseRandomQuestion(){
 
 
 function generateQuestionsAndAnswers(){
-    var currentQuestionIndex = chooseRandomQuestion();
+    var currentQuestionIndex = chooseRandomQuestion(); // this represents the question number
     var answerPool = objectQuestionAnswer[currentQuestionIndex].answerPool;
-    for (var i = 0; i < cards.length; i++){
-        chooseRandomAnswer();
-        for (var n = 0; n < randomlyGenerated.length; n++){ 
-            cards[n].textContent = answerPool[randomlyGenerated[n]]; // randomlyGenerated[n]
-            questionEl.textContent = objectQuestionAnswer[currentQuestionIndex].question;
-            console.log(i);
-        }
+    if (usedQuestionsArray.length == objectQuestionAnswer.length){ // ends game when all questions are answered
+        endGame();
     }
+    else if (usedQuestionsArray.includes(currentQuestionIndex)){ // recalls function if question was already answered
+        generateQuestionsAndAnswers();
+    }
+    else{ // adds questions and answers
+        for (var i = 0; i < cards.length; i++){
+            chooseRandomAnswer(); // adds the answers to each button
+            for (var n = 0; n < randomlyGeneratedArray.length; n++){ 
+                cards[n].textContent = answerPool[randomlyGeneratedArray[n]]; // randomlyGeneratedArray[n]
+                questionEl.textContent = objectQuestionAnswer[currentQuestionIndex].question;
+            }
+        }
+        usedQuestionsArray.push(currentQuestionIndex);
+    }
+
+    console.log(currentQuestionIndex);
+    console.log(usedQuestionsArray);
 }
 
+function endGame(){
+    console.log("used up all questions");
+}
 
 function answerClick(){
     for(var i = 0; i < cards.length; i++){
