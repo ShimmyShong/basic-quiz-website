@@ -41,7 +41,7 @@ var objectQuestionAnswer = [
     },
     {
         question: 'question9',
-        answerPool: ['answasdaser1', 'ansaqwesdwer2', 'an231fvswedsar3', 'anssdqsawer4'],
+        answerPool: ['answasdaser1', 'ansaqwesdwer2', 'an231fvswedsar3', 'correct'],
         correctAnswerIndex: 3
     },
     {
@@ -94,9 +94,8 @@ function chooseRandomQuestion(){
 
 // TODO the currentQuestionIndex changes for no reason??????
 function generateQuestionsAndAnswers(){
-    // currentQuestionIndex = chooseRandomQuestion(); // this represents the question number
     chooseRandomQuestion();
-    console.log("current question index: " + currentQuestionIndex);
+    // console.log("current question index: " + currentQuestionIndex);
     var answerPool = objectQuestionAnswer[currentQuestionIndex].answerPool;
     if (usedQuestionsArray.length == objectQuestionAnswer.length){ // conditions for when to end the game // TODO make sure to add timer counting!!!
         endGame();
@@ -124,19 +123,31 @@ function endGame(){
 function answerClick(){
     cards.forEach(card =>{
         card.addEventListener("click", () =>{
-            generateQuestionsAndAnswers();
             clickedAnswerIndex = Array.from(cards).indexOf(card); // when using querySelectorAll, this is how you would identify which of the elements were being clicked on
-            console.log("current question index: " + currentQuestionIndex);
-            // console.log("clicked answer index: " + clickedAnswerIndex);
-            // console.log(cards[clickedAnswerIndex]);
-            // console.log("correct answer Index of current question: " + objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex);
-            if (clickedAnswerIndex == objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex){
+            var correctAnswerIndex = objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex;
+            var currentCorrectAnswer = objectQuestionAnswer[currentQuestionIndex].answerPool[correctAnswerIndex];
+            if (cards[clickedAnswerIndex].textContent == currentCorrectAnswer){
                 console.log("correct!");
             }
-            
+            else{
+                console.log("incorrect");
+            }
+            generateQuestionsAndAnswers();
         });
     });
 }
+
+// function answerClick(){
+//     cards.forEach(function(card){
+//         card.addEventListener('click', function(event){
+//             console.log(event.target);
+//             if (event.target == objectQuestionAnswer[currentQuestionIndex].answerPool.indexOf(objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex)){
+//                 console.log("correct!");
+//             }
+//         });
+//     });
+// }
+
 
 generateQuestionsAndAnswers();
 answerClick();
