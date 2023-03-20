@@ -1,10 +1,22 @@
 * {
+    font-family: 'Oswald', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     margin:0;
     padding:0;
 }
 
+.blue-background{
+    background-color: #006989;
+    color: white;
+}
+
+.nav{
+    font-size: 30px;
+    text-align: center;
+}
+
 .header{
-    margin: 2%;
+    padding: .5%;
     font-size: 40px;
     text-align: center;
 }
@@ -12,14 +24,20 @@
 .center{
     font-size: 26px;
     text-align: center;
+    align-items: center;
 }
 
 .buttons{
-    margin: 3%;
+    margin-bottom: 3%;
+    margin-top: 1%;
 }
 
 .question{
     margin-top: 3%;
+}
+
+#question{
+    margin-top: -20%;
 }
 
 .card{
@@ -27,4 +45,31 @@
     padding: 3%;
     border-style: solid;
     border-color: black;
+}
+
+.column{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input{
+    padding: 3%;
+}
+
+.submit{
+    padding: .8%;
+}
+
+#input-p{
+    font-size: 50px;
+    margin-top: 5%;
+    margin-bottom: 1%;
+}
+
+#timer-input{
+    margin: 1%;
+    padding: 1%;
+    text-align: center;
 }

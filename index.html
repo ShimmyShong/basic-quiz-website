@@ -5,20 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto+Condensed&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-    <header class = "header">
+    <header class = "header blue-background">
         <h1>Basic Quiz Website</h1>
     </header>
 
-    <div class = "center">
-        <p>Open google dev tools to see some magic!!</p>
+    <nav class="nav blue-background">
+        <a id="timer"></a>
+    </nav>
+    
+
+    <div class = "center column input" id = 'first-screen'>
+        <p id = 'input-p'>Enter Timer count in Seconds</p>
+        <input type = 'number' id = 'timer-input' placeholder = 'Enter number'/>
+        <button id = 'button' class = 'submit'>Submit</button>
     </div>
 
     <div id="container">
         <div class = "question center">
             <p id = "questionText">Question here?</p>
+            <p id="accurate"></p>
         </div>
 
         <div class = "center buttons" id = "container">    

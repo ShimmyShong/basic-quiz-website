@@ -57,16 +57,19 @@ var usedQuestionsArray = [];
 var cards = document.querySelectorAll(".card");
 var container = document.querySelector("#container");
 var questionEl = document.querySelector('#questionText');
+var accurateEl = document.querySelector('#accurate');
+var timeEl = document.querySelector('#timer');
+var timerInput = document.querySelector('#timer-input');
+var buttonEl = document.querySelector('#button');
+var firstScreenEl = document.querySelector('#first-screen');
 var currentQuestionIndex = 0;
 var randomIndex = 0;
 
+container.setAttribute("style", "display: none"); // TODO might want to set these ids to be display: none in the CSS
 var timerInverval;
 var time = 0;
 var timeCap = 10;
 var correctAnswers = 0;
-
-// container.setAttribute("style", "display: none"); THIS will hide the questions and answers
-// container.setAttribute("style", "display: block"); THIS will bring the questions and answers back
 
 function chooseRandomIndex(){
     randomIndex = Math.floor(Math.random() * objectQuestionAnswer[0].answerPool.length);
@@ -83,7 +86,6 @@ function chooseRandomAnswer(){
             randomlyGeneratedArray.push(randomIndex);
         }
     }
-    // console.log(randomlyGeneratedArray);
     return randomlyGeneratedArray;
 }
 
@@ -92,12 +94,10 @@ function chooseRandomQuestion(){
     return currentQuestionIndex;
 }
 
-// TODO the currentQuestionIndex changes for no reason??????
 function generateQuestionsAndAnswers(){
     chooseRandomQuestion();
-    // console.log("current question index: " + currentQuestionIndex);
     var answerPool = objectQuestionAnswer[currentQuestionIndex].answerPool;
-    if (usedQuestionsArray.length == objectQuestionAnswer.length){ // conditions for when to end the game // TODO make sure to add timer counting!!!
+    if (usedQuestionsArray.length == objectQuestionAnswer.length){ // conditions for when to end the game
         endGame();
     }
     else if (usedQuestionsArray.includes(currentQuestionIndex)){ // recalls function if question was already answered
@@ -118,6 +118,8 @@ function generateQuestionsAndAnswers(){
 
 function endGame(){
     console.log("used up all questions");
+    timeEl.setAttribute("style", "display: none");
+    container.setAttribute("style", "display: none"); 
 }
 
 function answerClick(){
@@ -128,26 +130,51 @@ function answerClick(){
             var currentCorrectAnswer = objectQuestionAnswer[currentQuestionIndex].answerPool[correctAnswerIndex];
             if (cards[clickedAnswerIndex].textContent == currentCorrectAnswer){
                 console.log("correct!");
+                accurateEl.setAttribute('style', 'color: green');
+                accurateEl.textContent = "Correct!";
             }
             else{
                 console.log("incorrect");
+                accurateEl.setAttribute('style', 'color: red');
+                accurateEl.textContent = "Wrong!"
+                time -= 5;
             }
             generateQuestionsAndAnswers();
         });
     });
 }
 
-// function answerClick(){
-//     cards.forEach(function(card){
-//         card.addEventListener('click', function(event){
-//             console.log(event.target);
-//             if (event.target == objectQuestionAnswer[currentQuestionIndex].answerPool.indexOf(objectQuestionAnswer[currentQuestionIndex].correctAnswerIndex)){
-//                 console.log("correct!");
-//             }
-//         });
-//     });
-// }
+function setTime(){
+    if (time < 0){ // ensures the timer is more than 0 when submitting
+        return;
+    }
+    else{
+        timeEl.setAttribute("style", "display: block");
+        var timerInterval = setInterval(function(){
+            timeEl.textContent = "Time left: " + time;
+            time--;
+            if (time < 0){
+                endGame();
+                clearInterval(timerInterval);
+            }
+        }, 1000);
+    }
 
+}
 
-generateQuestionsAndAnswers();
-answerClick();
+function submitTimer(){
+    time = timerInput.value;
+    console.log(time);
+    setTime();
+    initQuiz();
+    return time;
+}
+
+buttonEl.addEventListener('click', submitTimer);
+
+function initQuiz(){
+    firstScreenEl.setAttribute('style', 'display: none');
+    container.setAttribute('style', 'display: block');
+    generateQuestionsAndAnswers();
+    answerClick();
+}
