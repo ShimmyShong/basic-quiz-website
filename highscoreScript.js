@@ -18,14 +18,14 @@ function displayHighScores(){
         var name = localStorageNames[scoreIndex].name;
         var liEl = document.createElement('li');
         liEl.textContent = name + ": " + sortedScores[i].score + " Points!"
-        liEl.classList.add("text-light", 'h4');
+        liEl.classList.add("text-light");
         highScoresOlEl.appendChild(liEl);
     }
 
 };
 
 function sortHighToLow (obj1, obj2){
-    return obj1.score - obj2.score;
+    return obj2.score - obj1.score;
 }
 
 displayHighScores();

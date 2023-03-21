@@ -5,6 +5,31 @@
     padding:0;
 }
 
+/* removes input arrows on chrome and other browsers */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* removes input arrows on firefox */
+input[type=number]{ 
+    -moz-appearance: textfield;
+}
+
+html{
+    height: 100vh;
+}
+
+h2{
+    font-size: 30px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
 .blue-background{
     background-color: #006989;
     color: white;
@@ -13,12 +38,17 @@
 .nav{
     font-size: 30px;
     text-align: center;
+    
+    border-color: #007090;
+    border-style: outset;
 }
 
 .header{
     padding: .5%;
     font-size: 40px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .center{
@@ -27,7 +57,7 @@
     align-items: center;
 }
 
-.buttons{
+.button .button2{
     margin-bottom: 3%;
     margin-top: 1%;
 }
@@ -59,6 +89,32 @@
     padding: .8%;
 }
 
+.list{
+    padding: 3%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-style: double;
+    border-color: #a3bac3;
+}
+
+#highscores-ol{
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 50vh;
+    padding-bottom: 8%;
+    padding-left: 8%;
+    padding-right: 8%;
+    border-style: double;
+    border-color: #a3bac3;
+    background-color:beige;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
 #input-p{
     font-size: 50px;
     margin-top: 5%;
@@ -69,4 +125,30 @@
     margin: 1%;
     padding: 1%;
     text-align: center;
+}
+
+#name-input{
+    margin: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
+    text-align: center;
+}
+
+@media (max-width: 890px) {
+    /* CSS rules that will be applied when the screen width is 768 pixels or larger */
+    .header{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .list{
+        border-style: none;
+    }
+
+    #highscores-ol {
+        font-size: 23px;
+        border-style: none;
+    }
 }

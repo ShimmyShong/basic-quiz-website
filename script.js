@@ -1,55 +1,55 @@
 var objectQuestionAnswer = [
     {
-        question: 'Which planet is closest to the sun?',
-        answerPool: ['Venus', 'correct', 'Mars', 'Jupiter'],
-        correctAnswerIndex: 1
+    question: 'What is the tallest mountain in the world?',    
+    answerPool: ['Mount Everest', 'Mount Kilimanjaro', 'Mount Fuji', 'Mount McKinley'],
+    correctAnswerIndex: 0,
     },
     {
-        question: 'What is the smallest country in the world by land area?',
-        answerPool: ['Monaco', 'correct', 'San Marino', 'Liechtenstein'],
-        correctAnswerIndex: 1
+    question: 'What is the largest ocean in the world?',
+    answerPool: ['Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean', 'Pacific Ocean'],
+    correctAnswerIndex: 3,
     },
     {
-        question: 'Who is the founder of Microsoft?',
-        answerPool: ['Bill Gates', 'Steve Jobs', 'Mark Zuckerberg', 'correct'],
-        correctAnswerIndex: 3
+    question: 'Who painted the famous artwork "The Starry Night"?',
+    answerPool: ['Claude Monet', 'Pablo Picasso', 'Vincent van Gogh', 'Leonardo da Vinci'],
+    correctAnswerIndex: 2,
     },
     {
-        question: 'What is the capital city of Canada?',
-        answerPool: ['correct', 'Vancouver', 'Ottawa', 'Montreal'],
-        correctAnswerIndex: 0
+    question: 'What is the currency of Japan?',
+    answerPool: ['Yuan', 'Yen', 'Dollar', 'Euro'],
+    correctAnswerIndex: 1,
     },
     {
-        question: 'question5',
-        answerPool: ['answer1', 'answer2', 'answer3', 'correct'],
-        correctAnswerIndex: 3
+    question: 'What is the capital city of Brazil?',
+    answerPool: ['Rio de Janeiro', 'São Paulo', 'Brasília', 'Belo Horizonte'],
+    correctAnswerIndex: 2,
     },
     {
-        question: 'question6',
-        answerPool: ['answasdasder1', 'ans123123213wer2', 'correct', 'ansdsw3qqweqw123413wer4'],
-        correctAnswerIndex: 2
+    question: 'What is the largest animal in the world?',
+    answerPool: ['Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus'],
+    correctAnswerIndex: 1,
     },
     {
-        question: 'question7',
-        answerPool: ['answasdaser1', 'ansas4788dwer2', 'answedsar3', 'correct'],
-        correctAnswerIndex: 3
+    question: 'What is the highest grossing movie of all time?',
+    answerPool: ['Avatar', 'Avengers: Endgame', 'Titanic', 'Star Wars: The Force Awakens'],
+    correctAnswerIndex: 1,
     },
     {
-        question: 'question8',
-        answerPool: ['correct', 'ansp[]p[]asdwer2', 'answedsar3', 'anssdsawer4'],
-        correctAnswerIndex: 0
+    question: 'Who is the author of the "Harry Potter" series?',
+    answerPool: ['J.K. Rowling', 'Stephen King', 'Dan Brown', 'George R.R. Martin'],
+    correctAnswerIndex: 0,
     },
     {
-        question: 'question9',
-        answerPool: ['answasdaser1', 'ansaqwesdwer2', 'an231fvswedsar3', 'correct'],
-        correctAnswerIndex: 3
+    question: 'What is the largest country by land area?',
+    answerPool: ['Russia', 'Canada', 'China', 'United States'],
+    correctAnswerIndex: 0,
     },
     {
-        question: 'question10',
-        answerPool: ['ansasdaswasdaser1', 'correct', 'answedsaqwer3', 'ans3sdsawer4'],
-        correctAnswerIndex: 1
-    },
-]
+    question: 'What is the smallest planet in our solar system?',
+    answerPool: ['Mars', 'Venus', 'Mercury', 'Neptune'],
+    correctAnswerIndex: 2,
+  },
+];
 
 var randomlyGeneratedArray = [];
 var usedQuestionsArray = [];
@@ -127,12 +127,12 @@ function endGame(){
     console.log("used up all questions");
     timeEl.setAttribute("style", "display: none");
     container.setAttribute("style", "display: none");
+    console.log(userScore);
+    secondScreenEl.setAttribute('style', 'display: block');
     button2El.addEventListener('click', function() {
         getName();
         saveScore();
     });
-    console.log(userScore);
-    secondScreenEl.setAttribute('style', 'display: block');
 }
 
 function answerClick(){
@@ -206,8 +206,6 @@ function getName(){
     return nameInput;
 }
 
-    
-
 
 function saveScore(){
     calculateScore();
@@ -230,5 +228,7 @@ function saveScore(){
 
     localStorage.setItem("localStorageHighScores", JSON.stringify(localStorageHighScores));
     localStorage.setItem("localStorageNames", JSON.stringify(localStorageNames));
+
+    location.href = 'highscores.html'; // TODO make sure this runs AFTER everything else happens
 }
 
